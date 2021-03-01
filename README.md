@@ -124,3 +124,28 @@ En la definción de postgres, en la etiqueta **volumes** indicamos el punto de e
 
 Para las aplicaciones back y front indicamos en el yaml el docker file desde donde tiene que construir la imagen.
 
+<hr>
+
+<a name="test-orquestation"></a>
+
+## 2. Ejecutar, administrar y probar la orquestación
+
+Ejecutamos el docker compose para construir todas las imágenes del archivo yaml:
+
+~~~
+docker-compose -f stack-billing.yml build
+~~~
+
+Podemos levantar todas las imágenes necesarias usando el comando:
+
+~~~
+docker-compose -f stack-billing.yml up -d
+~~~
+
+Al persistir los datos mediante un volumen, si paramos la ejecución de las imágenes con el comando:
+
+~~~
+docker-compose -f stack-billing.yml down (o stop)
+~~~
+
+Tras volver a levantarlo, veremos que los datos no se han perdido.
