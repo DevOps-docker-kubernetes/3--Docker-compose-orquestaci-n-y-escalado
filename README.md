@@ -170,7 +170,7 @@ Vamos a levantar varias instancias del frontal. Primero debemos comentar en el y
       - 80-85:80 
 ~~~
 
-Utilizamos el siguiente comando para levantar las instancias:
+Utilizamos el siguiente comando para levantar las instancias y crearlas sino estan creadas:
 
 ~~~
 docker-compose -f stack-billing.yml up --scale billingapp-front=3 -d --force-recreate
