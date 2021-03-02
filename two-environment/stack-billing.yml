@@ -76,22 +76,12 @@ services:
       context: ./angular 
     networks:
       - env_prod      
-    deploy:
-        replicas: 2
-        resources:
-           limits: 
-              cpus: "0.15"
-              memory: 250M
-#recusos dedicados, mantiene los recursos disponibles del host para el contenedor
-           reservations:
-              cpus: 0.1
-              memory: 128M
     #container_name: billingApp-front
     depends_on:     
       - billingapp-back-prod
 #rango de puertos para escalar    
     ports:
-      - 8081-8082:80
+      - 8081:80
 
 
 #ENV_PREP
@@ -120,22 +110,12 @@ services:
       context: ./angular 
     networks:     
       - env_prep
-    deploy:
-        replicas: 2
-        resources:
-           limits: 
-              cpus: "0.15"
-              memory: 250M
-#recusos dedicados, mantiene los recursos disponibles del host para el contenedor
-           reservations:
-              cpus: 0.1
-              memory: 128M
-    #container_name: billingApp-front
+    container_name: billingApp-front
     depends_on:     
       - billingapp-back-prep
 #rango de puertos para escalar    
     ports:
-      - 7081-7082:81
+      - 7081:81
 
 
 networks:
@@ -148,12 +128,8 @@ networks:
     ipam: 
         driver: default
         config:
-        - 
-          subnet: 172.16.232.0/24
-          gateway: 172.16.232.1
-        - 
-          subnet: "2001:3974:3979::/64"
-          gateway: "2001:3974:3979::1"
+        - subnet: 172.16.232.0/24
+        - subnet: "2001:3974:3979::/64"
   env_prep:   
     driver: bridge  
     #activate ipv6
@@ -163,9 +139,5 @@ networks:
     ipam:
         driver: default
         config:
-        - 
-          subnet: 172.16.235.0/24
-          gateway: 172.16.235.1
-        - 
-          subnet: "2001:3984:3989::/64"
-          gateway: "2001:3984:3989::1"
+        - subnet: 172.16.235.0/24
+        - subnet: "2001:3984:3989::/64"
