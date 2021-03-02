@@ -149,3 +149,62 @@ docker-compose -f stack-billing.yml down (o stop)
 ~~~
 
 Tras volver a levantarlo, veremos que los datos no se han perdido.
+
+<hr>
+
+<a name="scale"></a>
+
+## 3. Escalar servicios con docker-compose (múltiples instancias)
+
+Vamos a levantar varias instancias del frontal. Primero debemos comentar en el yaml el nombre del contenedor para no provocar conflictos al tener las nuevas instancias el mismo nombre. También debemos modificar el puerto de entrada y aplicar un rango.
+
+~~~yaml
+#Billin app frontend service
+  billingapp-front:
+    build:
+      context: ./angular 
+    # container_name: billingApp-front
+    depends_on:     
+      - billingapp-back
+    ports:
+      - 80-85:80 
+~~~
+
+Utilizamos el siguiente comando para levantar las instancias:
+
+~~~
+docker-compose -f stack-billing.yml up --scale billingapp-front=3 -d --force-recreate
+~~~
+
+El escalado se puede definir en el archivo yaml, permitiendo además limitar recursos en cada réplica. **DEPRECADO**
+
+~~~yaml
+#Billin app frontend service
+  billingapp-front:
+    build:
+      context: ./angular
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          cpus: "0.15"
+          memory: 250M
+        reservations:
+          cpus: "0.1"
+          memory: 128M
+    # container_name: billingApp-front
+    depends_on:     
+      - billingapp-back
+    ports:
+      - 80-85:80 
+~~~
+
+Levantamos las instancias con el comando:
+
+~~~
+docker-compose -f stack-billing.yml up -d --force-recreate
+~~~
+
+**DEPRECADO** Sólo se va a instanciar una imagen y mostrará un warning indicándolo...
+
+El comando ```docker stats``` muesta las estadísticas de cada uno de los contenedores.

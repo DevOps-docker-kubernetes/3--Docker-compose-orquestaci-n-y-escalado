@@ -45,8 +45,8 @@ services:
   billingapp-front:
     build:
       context: ./angular 
-    container_name: billingApp-front
+    #container_name: billingApp-front
     depends_on:     
       - billingapp-back
     ports:
-      - 80:80 
+      - 80-85:80 
